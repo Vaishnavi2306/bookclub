@@ -1,3 +1,4 @@
+
 package com.bookclub.security;
 
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth
             .inMemoryAuthentication()
-            .withUser("user1").password(encoder.encode("password1")).roles("USER")
+            .withUser("user").password(encoder.encode("password")).roles("USER")
             .and()
             .withUser("Vaishnavi").password(encoder.encode("password2306")).roles("USER", "ADMIN");
     }
@@ -41,3 +42,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 }
+
