@@ -1,7 +1,7 @@
 package com.bookclub.web;
 
 import com.bookclub.model.Book;
-import com.bookclub.service.impl.MemBookDao;
+import com.bookclub.service.impl.RestBookDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,14 +15,10 @@ import java.util.List;
 public class HomeController
 {
     @RequestMapping(method = RequestMethod.GET)
-    public String showHome(Model model)
-    {
-        MemBookDao bookDao = new MemBookDao();
-        List<Book> books = bookDao.list();
+    public String showHome(Model model) {
+        RestBookDao bookDao = new RestBookDao();
 
-        for (Book book : books) {
-            System.out.println(book.toString());
-        }
+        List<Book> books = bookDao.list();
 
         model.addAttribute("books", books);
 
@@ -31,26 +27,23 @@ public class HomeController
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public String getMonthlyBook(@PathVariable("id") String id, Model model) {
-        String isbn = id;
-        System.out.println(id);
+        RestBookDao bookDao = new RestBookDao();
 
-        MemBookDao bookDao = new MemBookDao();
-        Book book = bookDao.find(isbn);
-
-        System.out.println(book.toString());
+        Book book = bookDao.find(id);
 
         model.addAttribute("book", book);
+
         return "monthly-books/view";
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/about")
-    public String showAboutUs(Model model)
+    public String showAboutUs()
     {
         return "about";
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/contact")
-    public String showContactUs(Model model)
+    public String showContactUs()
     {
         return "contact";
     }
